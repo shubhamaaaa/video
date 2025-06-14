@@ -10,12 +10,12 @@ app.use(express.json());
 
 const server = http.createServer(app);
 const io = socketIO(server, { cors: { origin: '*' } });
-
+const frontendBaseUrl = process.env.FRONTEND_BASE_URL;
 const rooms = {}; // roomId -> [socketId]
 
 app.post('/create-room', (req, res) => {
   const roomId = uuidv4();
-  res.json({ roomId, url: `http://localhost:5174/room/${roomId}` });
+  res.json({ roomId, url: `${frontendBaseUrl}/room/${roomId}` });
 });
 
 io.on('connection', socket => {
